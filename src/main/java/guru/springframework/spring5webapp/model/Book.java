@@ -9,97 +9,96 @@ import java.util.Set;
  */
 @Entity
 public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String title;
-    private String isbn;
-    private String publisher;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String title;
+	private String isbn;
 
-    @ManyToMany
-    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
-    inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name = "publisher_id")
+	private Publisher publisher;
 
-    public Book() {
-    }
+	@ManyToMany
+	@JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
+	private Set<Author> authors = new HashSet<>();
 
-    public Book(String title, String isbn, String publisher) {
-        this.title = title;
-        this.isbn = isbn;
-        this.publisher = publisher;
-    }
+	public Book() {
+	}
 
-    public Book(String title, String isbn, String publisher, Set<Author> authors) {
-        this.title = title;
-        this.isbn = isbn;
-        this.publisher = publisher;
-        this.authors = authors;
-    }
+	public Book(String title, String isbn, Publisher publisher) {
+		this.title = title;
+		this.isbn = isbn;
+		this.publisher = publisher;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Book(String title, String isbn, Publisher publisher, Set<Author> authors) {
+		this.title = title;
+		this.isbn = isbn;
+		this.publisher = publisher;
+		this.authors = authors;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getIsbn() {
-        return isbn;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
+	public String getIsbn() {
+		return isbn;
+	}
 
-    public String getPublisher() {
-        return publisher;
-    }
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
 
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
+	public Publisher getPublisher() {
+		return publisher;
+	}
 
-    public Set<Author> getAuthors() {
-        return authors;
-    }
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
 
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
+	public Set<Author> getAuthors() {
+		return authors;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public void setAuthors(Set<Author> authors) {
+		this.authors = authors;
+	}
 
-        Book book = (Book) o;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
-        return id != null ? id.equals(book.id) : book.id == null;
-    }
+		Book book = (Book) o;
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
+		return id != null ? id.equals(book.id) : book.id == null;
+	}
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", authors=" + authors +
-                '}';
-    }
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
+
+	@Override
+	public String toString() {
+		return "Book{" + "id=" + id + ", title='" + title + '\'' + ", isbn='" + isbn + '\'' + ", publisher='"
+				+ publisher + '\'' + ", authors=" + authors + '}';
+	}
 }
